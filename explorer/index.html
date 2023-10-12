@@ -187,15 +187,27 @@
 					d="M125.276 24.934V11.2163C125.276 11.1199 125.352 11.0442 125.448 11.0442H128.945C129.041 11.0442 129.117 11.1199 129.117 11.2163V32.1251C129.117 32.2215 129.041 32.2972 128.945 32.2972H125.341C125.28 32.2972 125.221 32.2628 125.19 32.2077L116.632 16.7206C116.546 16.5657 116.309 16.6277 116.309 16.8032V32.1251C116.309 32.2215 116.233 32.2972 116.137 32.2972H112.64C112.544 32.2972 112.469 32.2215 112.469 32.1251V11.2163C112.469 11.1199 112.544 11.0442 112.64 11.0442H117.354C117.416 11.0442 117.475 11.0786 117.506 11.1337L124.953 25.0132C125.039 25.1716 125.276 25.1096 125.276 24.9306V24.934Z"
 					fill="white" />
 			</svg>
-			<h1>Key Value Store Explorer</h1>
+			<h1>Spin Environment Explorer</h1>
 		</div>
 		<!-- Nav -->
 		<div id="n-container">
 			<nav id="navbar">
 				<header></header>
-				<a class="nav-link" href="{{.SpinRoute}}">
+				<a class="nav-link" href="{{.SpinRoute}}" id="a-kv-explorer">
 					<i class="fa-table-list fa-sharp fa-solid" aria-hidden="true"></i>
 					Key Value Store</a>
+				<a class="nav-link" href="#envvar-explorer" id="a-envvar-explorer">
+					<i class="fa-table-list fa-sharp fa-solid" aria-hidden="true"></i>
+					Environment Variables</a>
+				<a class="nav-link" href="#confval-explorer" id="a-confval-explorer">
+					<i class="fa-table-list fa-sharp fa-solid" aria-hidden="true"></i>
+					Config Values</a>
+				<a class="nav-link" href="#vault-explorer" id="a-vault-explorer">
+					<i class="fa-table-list fa-sharp fa-solid" aria-hidden="true"></i>
+					Vault Secrets</a>
+				<a class="nav-link" href="#file-explorer" id="a-file-explorer">
+					<i class="fa-table-list fa-sharp fa-solid" aria-hidden="true"></i>
+					Files</a>
 				<a class="nav-link nav-link-bottom" href="https://developer.fermyon.com/spin" target="_blank">
 					<i class="fa-sharp fa-solid fa-book" aria-hidden="true"></i>
 					Documentation
@@ -206,12 +218,14 @@
 
 	<div id="m-container">
 		<main id="main-doc">
+			<!-- KV-Explorer -->
 			<section class="main-section" id="kv-explorer">
 
 				<div class="row">
 					<div class="col-md-9">
 
 						<div class="table-wrap">
+							<h1 id="envvars">Key-Value Explorer</h1>
 							<div class="row mb-2 add-kv">
 								<div class="col-md-6">
 									<input id="keyInput" type="text" class="form-control" placeholder="Key">
@@ -242,6 +256,164 @@
 					</div>
 					<div class="col-md-3 about-kv">
 						<h4>About Key Value Storage</h4>
+						<p>This is a storage option for applications that need data in the form
+							of key/value pairs and are satisfied by a BASE consistency
+							model. Workload examples include general value caching, session
+							caching, counters, and serialized application state.</p>
+						<p><a href="https://developer.fermyon.com/spin/kv-store#the-spin-toml-file"
+								target="_blank">Configuring a Key Value store</a> for
+							your Spin application allows you to <code>POST</code> and
+							<code>GET</code> &mdash; read the docs for <a
+								href="https://developer.fermyon.com/spin/kv-store#storing-and-retrieving-data-from-your-default-keyvalue-store"
+								target="_blank">Storing &amp; Retrieving Data From Your
+								Default Key/Value Store</a> for guidance and examples.
+						</p>
+					</div>
+				</div>
+
+			</section>
+			<!-- Environment Variables -->
+			<section class="main-section d-none" id="envvar-explorer">
+
+				<div class="row">
+					<div class="col-md-9">
+
+						<div class="table-wrap">
+                            <h1 id="envvars">Environment Variables</h1>
+							<table class="table table-striped table-dark" id="env">
+								<thead class="thead-dark">
+									<tr>
+										<th>Key</th>
+										<th>Value</th>
+									</tr>
+								</thead>
+								<tbody>
+								</tbody>
+							</table>
+
+						</div>
+
+					</div>
+					<div class="col-md-3 about-kv">
+						<h4>About Environment Variables</h4>
+						<p>This is a storage option for applications that need data in the form
+							of key/value pairs and are satisfied by a BASE consistency
+							model. Workload examples include general value caching, session
+							caching, counters, and serialized application state.</p>
+						<p><a href="https://developer.fermyon.com/spin/kv-store#the-spin-toml-file"
+								target="_blank">Configuring a Key Value store</a> for
+							your Spin application allows you to <code>POST</code> and
+							<code>GET</code> &mdash; read the docs for <a
+								href="https://developer.fermyon.com/spin/kv-store#storing-and-retrieving-data-from-your-default-keyvalue-store"
+								target="_blank">Storing &amp; Retrieving Data From Your
+								Default Key/Value Store</a> for guidance and examples.
+						</p>
+					</div>
+				</div>
+
+			</section>
+			<!-- Config Values -->
+			<section class="main-section d-none" id="confval-explorer">
+
+				<div class="row">
+					<div class="col-md-9">
+
+						<div class="table-wrap">
+                            <h1 id="envvars">Config Values</h1>
+							<table class="table table-striped table-dark" id="env">
+								<thead class="thead-dark">
+									<tr>
+										<th>Key</th>
+										<th>Value</th>
+									</tr>
+								</thead>
+								<tbody>
+								</tbody>
+							</table>
+
+						</div>
+
+					</div>
+					<div class="col-md-3 about-kv">
+						<h4>About Config Values</h4>
+						<p>This is a storage option for applications that need data in the form
+							of key/value pairs and are satisfied by a BASE consistency
+							model. Workload examples include general value caching, session
+							caching, counters, and serialized application state.</p>
+						<p><a href="https://developer.fermyon.com/spin/kv-store#the-spin-toml-file"
+								target="_blank">Configuring a Key Value store</a> for
+							your Spin application allows you to <code>POST</code> and
+							<code>GET</code> &mdash; read the docs for <a
+								href="https://developer.fermyon.com/spin/kv-store#storing-and-retrieving-data-from-your-default-keyvalue-store"
+								target="_blank">Storing &amp; Retrieving Data From Your
+								Default Key/Value Store</a> for guidance and examples.
+						</p>
+					</div>
+				</div>
+
+			</section>
+			<!-- Vault Secrets -->
+			<section class="main-section d-none" id="vault-explorer">
+
+				<div class="row">
+					<div class="col-md-9">
+
+						<div class="table-wrap">
+                            <h1 id="envvars">Vault Secrets</h1>
+							<table class="table table-striped table-dark" id="env">
+								<thead class="thead-dark">
+									<tr>
+										<th>Key</th>
+										<th>Value</th>
+									</tr>
+								</thead>
+								<tbody>
+								</tbody>
+							</table>
+
+						</div>
+
+					</div>
+					<div class="col-md-3 about-kv">
+						<h4>About Vault Secrets</h4>
+						<p>This is a storage option for applications that need data in the form
+							of key/value pairs and are satisfied by a BASE consistency
+							model. Workload examples include general value caching, session
+							caching, counters, and serialized application state.</p>
+						<p><a href="https://developer.fermyon.com/spin/kv-store#the-spin-toml-file"
+								target="_blank">Configuring a Key Value store</a> for
+							your Spin application allows you to <code>POST</code> and
+							<code>GET</code> &mdash; read the docs for <a
+								href="https://developer.fermyon.com/spin/kv-store#storing-and-retrieving-data-from-your-default-keyvalue-store"
+								target="_blank">Storing &amp; Retrieving Data From Your
+								Default Key/Value Store</a> for guidance and examples.
+						</p>
+					</div>
+				</div>
+
+			</section>
+			<!-- File Explorer -->
+			<section class="main-section d-none" id="file-explorer">
+
+				<div class="row">
+					<div class="col-md-9">
+
+						<div class="table-wrap">
+							<h1 id="files">Files</h1>
+							<table class="table table-striped table-dark" id="fil">
+								<thead class="thead-dark">
+									<tr>
+										<th>Path</th>
+									</tr>
+								</thead>
+								<tbody>
+								</tbody>
+							</table>
+						</div>
+
+					</div>
+					<div class="col-md-3 about-kv">
+						<h4>About Files</h4>
 						<p>This is a storage option for applications that need data in the form
 							of key/value pairs and are satisfied by a BASE consistency
 							model. Workload examples include general value caching, session
@@ -367,6 +539,47 @@
 					$("#valueInput").val("");
 				})
 		});
+
+		$("#a-kv-explorer").click(function () {
+			$("#kv-explorer").removeClass("d-none");
+			$("#envvar-explorer").addClass("d-none");
+			$("#confval-explorer").addClass("d-none");
+			$("#vault-explorer").addClass("d-none");
+			$("#file-explorer").addClass("d-none");
+		});
+
+		$("#a-envvar-explorer").click(function () {
+			$("#envvar-explorer").removeClass("d-none");
+			$("#kv-explorer").addClass("d-none");
+			$("#confval-explorer").addClass("d-none");
+			$("#vault-explorer").addClass("d-none");
+			$("#file-explorer").addClass("d-none");
+		});
+
+		$("#a-confval-explorer").click(function () {
+			$("#confval-explorer").removeClass("d-none");
+			$("#kv-explorer").addClass("d-none");
+			$("#envvar-explorer").addClass("d-none");
+			$("#vault-explorer").addClass("d-none");
+			$("#file-explorer").addClass("d-none");
+		});
+
+		$("#a-vault-explorer").click(function () {
+			$("#vault-explorer").removeClass("d-none");
+			$("#kv-explorer").addClass("d-none");
+			$("#envvar-explorer").addClass("d-none");
+			$("#confval-explorer").addClass("d-none");
+			$("#file-explorer").addClass("d-none");
+		});
+
+		$("#a-file-explorer").click(function () {
+			$("#file-explorer").removeClass("d-none");
+			$("#kv-explorer").addClass("d-none");
+			$("#envvar-explorer").addClass("d-none");
+			$("#confval-explorer").addClass("d-none");
+			$("#vault-explorer").addClass("d-none");
+		});
+
 	</script>
 
 </body>

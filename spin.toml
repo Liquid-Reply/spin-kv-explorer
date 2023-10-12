@@ -9,6 +9,7 @@ version = "0.1.0"
 [[component]]
 id = "golang-explorer"
 source = "explorer/main.wasm"
+environment = { "API_URL" = "http://envvars:8080/api", "CA_URL" = "http://envvars:8080/api", "DA" = "http://envvars:8080/api" }
 allowed_http_hosts = []
 key_value_stores = ["default"]
 [component.trigger]

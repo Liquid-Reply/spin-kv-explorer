@@ -18,8 +18,10 @@ import (
 	kv "github.com/fermyon/spin/sdk/go/key_value"
 )
 
-var KV_STORE_CREDENTIALS_KEY string = "kv-credentials"
-var SKIP_AUTH_ENV string = "SPIN_APP_KV_SKIP_AUTH"
+var (
+	KV_STORE_CREDENTIALS_KEY string = "kv-credentials"
+	SKIP_AUTH_ENV            string = "SPIN_APP_KV_SKIP_AUTH"
+)
 
 // At build time, read the contents of index.html and embed it in the `Html` variable.
 // The goal for this is having a single wasm binary that can be added using `spin add`.
@@ -44,6 +46,15 @@ type GetResult struct {
 type ListResult struct {
 	Store string   `json:"store"`
 	Keys  []string `json:"keys"`
+}
+
+type KeyValue struct {
+	Key   string `json:"key"`
+	Value string `json:"value"`
+}
+
+type ListEnvVars struct {
+	EnvVars []KeyValue `json:"envvars"`
 }
 
 func init() {
@@ -86,6 +97,7 @@ func serve(w http.ResponseWriter, r *http.Request) {
 	router.GET(path.Join(spinRoute, "/api/stores/:store/keys/:key"), BasicAuth(GetKeyHandler, user, pass))
 	router.DELETE(path.Join(spinRoute, "/api/stores/:store/keys/:key"), BasicAuth(DeleteKeyHandler, user, pass))
 	router.POST(path.Join(spinRoute, "/api/stores/:store"), BasicAuth(AddKeyHandler, user, pass))
+	router.GET(path.Join(spinRoute, "/api/config/envvars"), BasicAuth(ListEnvVarsHandler, user, pass))
 
 	// We want to allow users to access the UI without basic auth in order to set the credentials.
 	// We rely on the browser automatically asking for the basic auth credentials to send to the request.
@@ -98,7 +110,6 @@ func serve(w http.ResponseWriter, r *http.Request) {
 func UIHandler(w http.ResponseWriter, _ *http.Request, _ spin.Params) {
 	out := strings.ReplaceAll(HTMLTemplate, "{{.SpinRoute}}", spinRoute)
 	w.Write([]byte(out))
-
 }
 
 // ListKeysHandler is the HTTP handler for a list keys request.
@@ -126,6 +137,22 @@ func ListKeysHandler(w http.ResponseWriter, _ *http.Request, p spin.Params) {
 	json.NewEncoder(w).Encode(res)
 }
 
+func ListEnvVarsHandler(w http.ResponseWriter, _ *http.Request, p spin.Params) {
+	envvars := []KeyValue{}
+
+	for _, e := range os.Environ() {
+		pair := strings.SplitN(e, "=", 2)
+		envvars = append(envvars, KeyValue{Key: pair[0], Value: pair[1]})
+		log.Printf("%s = %s", pair[0], pair[1])
+	}
+
+	start := time.Now()
+	log.Printf("LIST operation took: %s", time.Since(start))
+
+	res := ListEnvVars{EnvVars: []KeyValue{}}
+	json.NewEncoder(w).Encode(res)
+}
+
 // GetKeyHandler is the HTTP handler for a get key request.
 func GetKeyHandler(w http.ResponseWriter, _ *http.Request, p spin.Params) {
 	storeName := p.ByName("store")
@@ -149,7 +176,6 @@ func GetKeyHandler(w http.ResponseWriter, _ *http.Request, p spin.Params) {
 
 	res := GetResult{Store: storeName, Key: key, Value: value}
 	json.NewEncoder(w).Encode(res)
-
 }
 
 // DeleteKeyHandler is the HTTP handler for a delete key request.
@@ -204,7 +230,6 @@ func AddKeyHandler(w http.ResponseWriter, r *http.Request, p spin.Params) {
 // BasicAuth is a middleware that checks for basic auth credentials in a request.
 func BasicAuth(h spin.RouterHandle, requiredUser, requiredPassword string) spin.RouterHandle {
 	return func(w http.ResponseWriter, r *http.Request, ps spin.Params) {
-
 		// This scenario is only intended for the local scenario, and skips basic authentication
 		// when the environment variable is set.
 		val, ok := os.LookupEnv(SKIP_AUTH_ENV)
