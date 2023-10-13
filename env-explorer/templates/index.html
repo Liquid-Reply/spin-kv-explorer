@@ -525,10 +525,11 @@
 			}
 
 			let data = {
+				store: "default",
 				key: key,
 				value: value
 			};
-			fetch("{{ spinroute }}api/stores/default", {
+			fetch("{{ spinroute }}api/stores/" + data.store, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json'
