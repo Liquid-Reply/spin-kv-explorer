@@ -3,6 +3,8 @@ name: Build
 on:
   push:
     branches: [main]
+env:
+  CARGO_TERM_COLOR: always
 jobs:
   test:
     name: Test
@@ -10,20 +12,17 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Setup TinyGo
-        uses: rajatjindal/setup-actions/tinygo@v0.0.1
-        id: setup
+      - name: Install latest Rust stable toolchain
+        uses: actions-rs/toolchain@v1
         with:
-          version: "v0.27.0"
+          toolchain: stable
+          default: true
+          components: clippy, rustfmt
 
-      - name: Install Spin canary
-        uses: engineerd/configurator@v0.0.10
-        with:
-          name: "spin"
-          url: "https://github.com/fermyon/spin/releases/download/canary/spin-canary-linux-amd64.tar.gz"
-          pathInArchive: "spin"
+      - name: "Install Wasm Rust target"
+        run: rustup target add wasm32-wasi
 
-      - name: Build application
-        shell: bash
-        run: |
-          spin build
+      - name: Make
+        run: make
+        env:
+          RUST_LOG: spin=trace
