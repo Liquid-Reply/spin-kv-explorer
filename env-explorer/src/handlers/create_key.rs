@@ -1,5 +1,4 @@
 use anyhow::Result;
-use serde::de::value::CowStrDeserializer;
 use spin_sdk::{
     key_value::Store,
     http::{Params, Request, Response},
