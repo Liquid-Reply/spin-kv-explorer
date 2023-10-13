@@ -1,21 +1,43 @@
 use anyhow::Result;
-use spin_sdk::http::{Params, Request, Response,
+use spin_sdk::{
+    key_value::Store,
+    http::{Params, Request, Response,},
 };
-use std::env;
-
-use crate::models::EnvVarListModel;
 
 pub(crate) fn handle_delete_key(_req: Request, _params: Params) -> Result<Response> {
-    let mut envvars: Vec<EnvVarListModel> = Vec::<EnvVarListModel>::default();
+    // start := time.Now()
+    let Some(key) = _params.get("key") else {
+        return Ok(http::Response::builder()
+            .status(http::StatusCode::NOT_FOUND)
+            .body(None)?);
+    };
 
-    env::vars()
-        .for_each(|(k, v)| {
-            // println!("{}: {}", &k, &v);
-            envvars.push(EnvVarListModel { key: k, value: v });
-        });
+    let Some(store_name) = _params.get("store") else {
+        return Ok(http::Response::builder()
+            .status(http::StatusCode::NOT_FOUND)
+            .body(None)?);
+    };
+    let store = Store::open(store_name)?;
 
-    let body = serde_json::to_string(&envvars)?;
+    let Ok(exists) = store.exists(key) else {
+        return Ok(http::Response::builder()
+            .status(http::StatusCode::NOT_FOUND)
+            .body(None)?);
+    };
+
+    if !exists {
+        return Ok(http::Response::builder()
+            .status(http::StatusCode::NOT_FOUND)
+            .body(None)?);
+    }
+
+    let Ok(_) = store.delete(key) else {
+        return Ok(http::Response::builder()
+            .status(http::StatusCode::INTERNAL_SERVER_ERROR)
+            .body(None)?);
+    };
+
     Ok(http::Response::builder()
-    .status(http::StatusCode::OK)
-    .body(Some(body.into()))?)
+        .status(http::StatusCode::OK)
+        .body(None)?)
 }
