@@ -1,7 +1,7 @@
 use anyhow::Result;
 use spin_sdk::{
-    key_value::Store,
     http::{Params, Request, Response},
+    key_value::Store,
 };
 
 use crate::models::AllKeysListModel;
@@ -21,7 +21,7 @@ pub(crate) fn handle_get_list_keys(_req: Request, _params: Params) -> Result<Res
             .status(http::StatusCode::INTERNAL_SERVER_ERROR)
             .body(None)?);
     };
-    let mut result : AllKeysListModel = AllKeysListModel {
+    let mut result: AllKeysListModel = AllKeysListModel {
         store: store_name.to_string(),
         keys: Vec::<String>::default(),
     };

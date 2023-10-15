@@ -1,11 +1,11 @@
 use anyhow::Result;
 use spin_sdk::{
-    key_value::Store,
     http::{Params, Request, Response},
+    key_value::Store,
 };
 
-use crate::models::CreateEntryModel;
 use crate::entities::Entry;
+use crate::models::CreateEntryModel;
 
 pub(crate) fn handle_create_key(_req: Request, _params: Params) -> Result<Response> {
     // what if key existing?
@@ -18,8 +18,8 @@ pub(crate) fn handle_create_key(_req: Request, _params: Params) -> Result<Respon
 
     let Ok(model) = CreateEntryModel::try_from(&_req.body().clone()) else {
         return Ok(http::Response::builder()
-        .status(http::StatusCode::BAD_REQUEST)
-        .body(None)?);
+            .status(http::StatusCode::BAD_REQUEST)
+            .body(None)?);
     };
 
     let Some(store_name) = _params.get("store") else {

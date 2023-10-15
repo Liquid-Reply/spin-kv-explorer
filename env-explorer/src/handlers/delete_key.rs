@@ -1,7 +1,7 @@
 use anyhow::Result;
 use spin_sdk::{
+    http::{Params, Request, Response},
     key_value::Store,
-    http::{Params, Request, Response,},
 };
 
 pub(crate) fn handle_delete_key(_req: Request, _params: Params) -> Result<Response> {

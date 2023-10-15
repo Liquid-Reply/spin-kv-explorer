@@ -39,9 +39,7 @@ pub(crate) struct FileListModel {
 
 impl From<File> for FileListModel {
     fn from(value: File) -> Self {
-        Self {
-            path: value.path,
-        }
+        Self { path: value.path }
     }
 }
 

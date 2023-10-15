@@ -1,7 +1,7 @@
 use anyhow::Result;
 use spin_sdk::{
-    key_value::Store,
     http::{Params, Request, Response},
+    key_value::Store,
 };
 
 use crate::models::EntryModel;
@@ -19,7 +19,7 @@ pub(crate) fn handle_get_key(_req: Request, _params: Params) -> Result<Response>
             .body(None)?);
     };
     let store = Store::open(store_name)?;
-    
+
     // start := time.Now()
     let Ok(found) = store.get(key) else {
         return Ok(http::Response::builder()
@@ -29,10 +29,10 @@ pub(crate) fn handle_get_key(_req: Request, _params: Params) -> Result<Response>
 
     let value = String::from_utf8(found).expect("Found invalid UTF-8");
 
-    let model = EntryModel{
+    let model = EntryModel {
         store: store_name.to_string(),
         key: key.to_string(),
-        value: value,
+        value,
     };
     let serialized = serde_json::to_string(&model)?;
     // log.Printf("LIST operation took: %s", time.Since(start))
