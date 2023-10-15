@@ -27,7 +27,7 @@ jobs:
         run: rustup target add wasm32-wasi
 
       - name: Make
-        run: make
+        run: cd env-explorer && make
         env:
           RUST_LOG: spin=trace
 
