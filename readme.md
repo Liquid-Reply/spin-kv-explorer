@@ -1,3 +1,41 @@
+# Spin Environment Explorer
+
+This is a fork of Radu Mateis KV-Explorer with some added functionality. The goal was to create more transparency on how a Spin component is configured, by visualizing configurable Items like Environment Variables, accessable Files, Configurations etc.
+
+Because of the way [TinyGo currently handles `os.Environ()`](https://github.com/fermyon/spin/issues/1259) I aimed to reimplement the key/value explorer part in rust.
+
+![](./img/env-explorer.gif)
+
+## Todo:
+
+While the KV-Explorer part is fully functional, the env-explorer misses a couple of more features to be en-par with the original KV-Explorer.
+
+- Feature Parity with KV-Explorer
+  - missing basic auth (including configuration of `KV_CREDENTIALS="user:password"` and `SPIN_APP_KV_SKIP_AUTH=1`)
+  - adjust template to use env-explorer
+- Implement displaying Secrets via Vault
+
+### Open:
+- Currently the display of Configuration Values is very limited, as values have to be addressed explicitly by their key. A `spin_sdk::config::get_all()` would be nice to have, but is not in scope of this project.
+
+## Build
+
+To build the project & run test suite use `make` to build both, the original kv-explorer as well as the new env-explorer.
+
+```bash
+make
+```
+
+Of course, `spin build` works as well ;)
+
+If you only want to build env-explorer:
+
+```bash
+cd env-explorer && make
+```
+
+---
+
 # Spin key/value explorer
 
 This is a simple Spin component for exploring the contents of key/value stores.
