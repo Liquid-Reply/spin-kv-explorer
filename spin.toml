@@ -5,20 +5,21 @@ name = "kv-explorer"
 trigger = { type = "http", base = "/" }
 version = "0.1.0"
 
-[[component]]
-id = "golang-explorer"
-source = "explorer/explorer.wasm"
-allowed_http_hosts = []
-key_value_stores = ["default"]
-[component.trigger]
-route = "/internal/kv-explorer/..."
-[component.build]
-command = "tinygo build -target=wasi -gc=leaking -o explorer.wasm main.go"
-workdir = "explorer"
-watch = ["**/*.go", "go.mod"]
+# [[component]]
+# id = "golang-explorer"
+# source = "explorer/explorer.wasm"
+# allowed_http_hosts = []
+# key_value_stores = ["default"]
+# [component.trigger]
+# route = "/internal/kv-explorer/..."
+# [component.build]
+# command = "tinygo build -target=wasi -gc=leaking -o explorer.wasm main.go"
+# workdir = "explorer"
+# watch = ["**/*.go", "go.mod"]
 
 [variables]
 environment = { default = "local" }
+skip_auth_env = { default = "1" }
 
 [[component]]
 id = "env-explorer"
