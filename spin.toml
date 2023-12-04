@@ -5,25 +5,25 @@ name = "kv-explorer"
 trigger = { type = "http", base = "/" }
 version = "0.1.0"
 
-[[component]]
-id = "golang-explorer"
-source = "explorer/explorer.wasm"
-allowed_http_hosts = []
-key_value_stores = ["default"]
-[component.trigger]
-route = "/internal/kv-explorer/..."
-[component.build]
-command = "tinygo build -target=wasi -gc=leaking -o explorer.wasm main.go"
-workdir = "explorer"
-watch = ["**/*.go", "go.mod"]
+# [[component]]
+# id = "golang-explorer"
+# source = "explorer/explorer.wasm"
+# allowed_http_hosts = []
+# key_value_stores = ["default"]
+# [component.trigger]
+# route = "/internal/kv-explorer/..."
+# [component.build]
+# command = "tinygo build -target=wasi -gc=leaking -o explorer.wasm main.go"
+# workdir = "explorer"
+# watch = ["**/*.go", "go.mod"]
 
 [variables]
-environment = { default = "local" }
+config_value = { default = "local" }
 
 [[component]]
 id = "env-explorer"
 source = "env-explorer/target/wasm32-wasi/release/env_explorer.wasm"
-environment = { "API_URL" = "http://envvars:8080/api", "CA_URL" = "http://envvars:8080/api", "DA" = "http://envvars:8080/api" }
+environment = {"API_URL" = "http://envvars:8080/api", "HELLO" = "WORLD", "TEST_IS" = "Working" }
 files = [
     # "./**/*" # Doesn't work in k8s
     { source = "./env-explorer/src/", destination = "/src" },
@@ -31,7 +31,7 @@ files = [
 allowed_http_hosts = []
 key_value_stores = ["default"]
 [component.config]
-environment = "{{ environment }}"
+config_value = "{{ config_value }}"
 [component.trigger]
 route = "/..."
 [component.build]

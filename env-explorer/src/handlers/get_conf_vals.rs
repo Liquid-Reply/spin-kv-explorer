@@ -9,13 +9,13 @@ use crate::models::ConValListModel;
 pub(crate) fn handle_get_conf_vals(_req: Request, _params: Params) -> Result<Response> {
     let mut confvals: Vec<ConValListModel> = Vec::<ConValListModel>::default();
 
-    let v_result = config::get("environment");
+    let v_result = config::get("config_value");
     match v_result {
         Ok(v) => confvals.push(ConValListModel {
-            key: "environment".to_string(),
+            key: "config_value".to_string(),
             value: v,
         }),
-        Err(error) => panic!("Problem getting environment: {:?}", error),
+        Err(error) => panic!("Problem getting config_value: {:?}", error),
     };
 
     // TODO: implement config::get_all() in spin_sdk instead
