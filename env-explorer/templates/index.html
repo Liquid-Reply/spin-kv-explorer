@@ -201,10 +201,10 @@
 					Environment Variables</a>
 				<a class="nav-link" href="#confval-explorer" id="a-confval-explorer">
 					<i class="fa-table-list fa-sharp fa-solid" aria-hidden="true"></i>
-					Config Values</a>
-				<a class="nav-link" href="#vault-explorer" id="a-vault-explorer">
+					Application Variables</a>
+				<!-- <a class="nav-link" href="#vault-explorer" id="a-vault-explorer">
 					<i class="fa-table-list fa-sharp fa-solid" aria-hidden="true"></i>
-					Vault Secrets</a>
+					Vault Secrets</a> -->
 				<a class="nav-link" href="#file-explorer" id="a-file-explorer">
 					<i class="fa-table-list fa-sharp fa-solid" aria-hidden="true"></i>
 					Files</a>
@@ -296,18 +296,8 @@
 					</div>
 					<div class="col-md-3 about-kv">
 						<h4>About Environment Variables</h4>
-						<p>This is a storage option for applications that need data in the form
-							of key/value pairs and are satisfied by a BASE consistency
-							model. Workload examples include general value caching, session
-							caching, counters, and serialized application state.</p>
-						<p><a href="https://developer.fermyon.com/spin/kv-store#the-spin-toml-file"
-								target="_blank">Configuring a Key Value store</a> for
-							your Spin application allows you to <code>POST</code> and
-							<code>GET</code> &mdash; read the docs for <a
-								href="https://developer.fermyon.com/spin/kv-store#storing-and-retrieving-data-from-your-default-keyvalue-store"
-								target="_blank">Storing &amp; Retrieving Data From Your
-								Default Key/Value Store</a> for guidance and examples.
-						</p>
+						<p>Environment variables can be provided to components via the Spin application manifest. This variables then can be retrieved via environment variable API of the respective programming language. In Rust this is e.g. <code>std::env::var([variable_name])</code></p>
+						<p><a href="https://developer.fermyon.com/spin/v2/writing-apps#adding-environment-variables-to-components" target="_blank">Read the docs</a> for more information on how to configure environment variables.</p>
 					</div>
 				</div>
 
@@ -319,7 +309,7 @@
 					<div class="col-md-9">
 
 						<div class="table-wrap">
-                            <h1 id="confval">Config Values</h1>
+                            <h1 id="confval">Application Variables</h1>
 							<table class="table table-striped table-dark" id="con">
 								<thead class="thead-dark">
 									<tr>
@@ -335,25 +325,17 @@
 
 					</div>
 					<div class="col-md-3 about-kv">
-						<h4>About Config Values</h4>
-						<p>This is a storage option for applications that need data in the form
-							of key/value pairs and are satisfied by a BASE consistency
-							model. Workload examples include general value caching, session
-							caching, counters, and serialized application state.</p>
-						<p><a href="https://developer.fermyon.com/spin/kv-store#the-spin-toml-file"
-								target="_blank">Configuring a Key Value store</a> for
-							your Spin application allows you to <code>POST</code> and
-							<code>GET</code> &mdash; read the docs for <a
-								href="https://developer.fermyon.com/spin/kv-store#storing-and-retrieving-data-from-your-default-keyvalue-store"
-								target="_blank">Storing &amp; Retrieving Data From Your
-								Default Key/Value Store</a> for guidance and examples.
+						<h4>About Application Variables</h4>
+						<p>Spin supports dynamic application variables. Instead of being static, their values can be updated without modifying the application, creating a simpler experience for rotating secrets, updating API endpoints, and more.</p>
+						<p>These variables are defined in a Spin application manifest (in the <code>[variables]</code> section), and their values can be set or overridden at runtime by an application variables provider.
+							Read the docs for about <a href="https://developer.fermyon.com/spin/v2/variables" target="_blank">Application Variables</a> for guidance and examples.
 						</p>
 					</div>
 				</div>
 
 			</section>
 			<!-- Vault Secrets -->
-			<section class="main-section d-none" id="vault-explorer">
+			<!-- <section class="main-section d-none" id="vault-explorer">
 
 				<div class="row">
 					<div class="col-md-9">
@@ -391,7 +373,7 @@
 					</div>
 				</div>
 
-			</section>
+			</section> -->
 			<!-- File Explorer -->
 			<section class="main-section d-none" id="file-explorer">
 
@@ -414,18 +396,8 @@
 					</div>
 					<div class="col-md-3 about-kv">
 						<h4>About Files</h4>
-						<p>This is a storage option for applications that need data in the form
-							of key/value pairs and are satisfied by a BASE consistency
-							model. Workload examples include general value caching, session
-							caching, counters, and serialized application state.</p>
-						<p><a href="https://developer.fermyon.com/spin/kv-store#the-spin-toml-file"
-								target="_blank">Configuring a Key Value store</a> for
-							your Spin application allows you to <code>POST</code> and
-							<code>GET</code> &mdash; read the docs for <a
-								href="https://developer.fermyon.com/spin/kv-store#storing-and-retrieving-data-from-your-default-keyvalue-store"
-								target="_blank">Storing &amp; Retrieving Data From Your
-								Default Key/Value Store</a> for guidance and examples.
-						</p>
+						<p>Spin can mount directories to make them available to the component. By default default no fiels are mounetd.</p>
+						<p><a href="https://developer.fermyon.com/spin/v2/writing-apps#including-files-with-components" target="_blank">Read the docs</a> for more information on how to mount files.</p>
 					</div>
 				</div>
 
